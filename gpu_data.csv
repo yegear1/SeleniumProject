@@ -1,101 +1,26 @@
-Marca,Nome
-asrock,radeon rx 6600 challenger d
-inno3d,geforce rtx 3060 twin x2
-asus,dual amd radeon rx 7600 evo oc edition
-gigabyte,nvidia geforce rtx 4070 windforce oc
-xfx,amd radeon rx 7600 speedster qick 308
-galax,nvidia geforce rtx 4060 1-click oc 2x v2
-xfx,speedster amd radeon rx 6650 xt swft 210
-gigabyte,nvidia geforce rtx 4060 eagle oc
-gigabyte,nvidia geforce rtx 4060 windforce oc
-msi,nvidia geforce gtx 1650 d6 ventus xs ocv3
-asrock,radeon rx 6600 challenger white
-asus,rog strix nvidia geforce rtx 4060 ti oc
-asrock,amd radeon rx 7600 challenger oc
-palit,nvidia geforce rtx 4060 infinity 2
-gigabyte,nvidia geforce rtx 4070 ti super windforce max oc
-vxpro,nvidia geforce g210lp
-asrock,amd radeon rx 7600 steel legend oc
-asrock,intel arc b580 challenger oc
-asus,dual nvidia geforce rtx 4060 evo oc
-afox,geforce gt 610
-afox,radeon rx 550
-galax,nvidia geforce rtx 5070 ti ex 1-click oc
-galax,nvidia geforce rtx 5070 ti 1-click oc
-galax,nvidia geforce rtx 3050 ex
-msi,nvidia geforce rtx 5070 ti vanguard soc launch edition
-msi,nvidia geforce rtx 5080 shadow 3x oc
-msi,nvidia geforce rtx 5080 inspire 3x oc
-msi,nvidia geforce rtx 5070 gaming trio oc
-gigabyte,nvidia geforce rtx 5070 ti windforce oc sff
-gigabyte,nvidia geforce rtx 5070 gaming oc
-gigabyte,nvidia geforce rtx 5070 ti eagle oc ice sff
-gigabyte,nvidia geforce rtx 5070 ti gaming oc
-gigabyte,nvidia geforce rtx 5070 ti aero oc
-gigabyte,nvidia geforce rtx 5070 ti aorus master
-asus,tuf gaming nvidia geforce rtx 5070 oc edition
-sapphire,pulse amd radeon rx 9070 gaming
-pcyes,nvidia geforce rtx 3050 projeto edge
-pcyes,nvidia geforce rtx 3050 projeto edge
-pcyes,nvidia geforce rtx 3050 projeto edge
-pcyes,nvidia geforce rtx 3050 projeto edge
-msi,nvidia geforce rtx 5070 ti ventus 3x oc
-maxsun,intel arc b580 milestone
-maxsun,intel arc b580 icraft
-asus,dual nvidia geforce rtx 4060 ti evo white oc edition
-asus,tuf gaming nvidia geforce rtx 5070 ti oc edition
-gigabyte,nvidia geforce rtx 5090 gaming oc
-intel,arc b580 limited edition
-gigabyte,nvidia geforce rtx 5080 aorus master
-gigabyte,nvidia geforce rtx 5080 gaming oc
-vxpro,nvidia geforce gt 1030
-vxpro,nvidia geforce gt730lp
-vxpro,nvidia geforce gtx 1050 ti
-vxpro,nvidia geforce gt710lp
-vxpro,nvidia geforce gtx 1050
-vxpro,nvidia geforce gt1030lp
-vx,pro nvidia geforce gt730
-vxpro,nvidia geforce gt730lp
-vx,pro nvidia geforce gt730
-vx,pro nvidia geforce gt610lp
-vx,pro nvidia geforce gtx 750 ti
-asrock,intel arc b580 steel legend oc
-asrock,intel arc b570 challenger oc
-asus,dual nvidia geforce rtx 4060 evo oc white
-vx,pro nvidia geforce gtx 750 ti
-asus,prime nvidia geforce rtx 4060 ti oc edition
-pny,nvidia geforce rtx 4060 xlr8 gaming verto oc
-asus,dual nvidia geforce rtx 4060 oc v2
-vxpro,nvidia geforce gt730lp
-vxpro,nvidia geforce gtx 1050 ti
-brx,amd radeon rx 580
-gainward,nvidia geforce rtx 4060 python ii
-xfx,amd radeon rx 7900 gre
-zotac,gaming nvidia geforce rtx 3060
-pcyes,nvidia geforce gtx 750 ti
-brx,amd radeon r5 240
-msi,nvidia geforce rtx 3050 ventus 2x oc
-asus,dual
-zotac,nvidia geforce rtx 4060 twin edge oc
-sapphire,pure amd radeon rx 7800 xt
-asus,proart nvidia geforce rtx 4060 oc
-asrock,amd radeon rx 7900 xtx taichi white oc
-gigabyte,amd radeon rx 7700 xt gaming oc
-asrock,amd radeon rx 7700 xt challenger oc
-asrock,amd radeon rx 7800 xt challenger oc
-duex,nvidia geforce gt740lp
-msi,nvidia geforce rtx 4060 ti ventus 2x black oc
-inno3d,nvidia geforce rtx 4060 ti twin x2 oc white
-inno3d,nvidia geforce rtx 4060 ti x3 oc
-asus,tuf gaming nvidia geforce rtx 4060 ti oc
-inno3d,nvidia geforce gt730
-asrock,amd radeon rx 7900 xtx phantom gaming oc
-duex,nvidia geforce dx g210512
-gigabyte,nvidia geforce rtx 5070 ti eagle oc sff
-gigabyte,nvidia geforce rtx 5090 windforce oc
-asus,dual nvidia geforce rtx 4060 ti evo oc
-gigabyte,nvidia geforce rtx 5090 aorus master ice
-gigabyte,nvidia geforce rtx 5070 eagle oc sff
-gigabyte,nvidia geforce rtx 5070 aero oc
-gigabyte,amd radeon rx 9070 xt gaming oc
-asus,nvidia geforce rtx 4060 ti v2 oc ats
+Marca,Nome,Preço
+asrock,radeon rx 6600 challenger d,"1.549,90"
+inno3d,geforce rtx 3060 twin x2,"1.999,90"
+asus,dual amd radeon rx 7600 evo oc edition,"1.899,90"
+gigabyte,nvidia geforce rtx 4070 windforce oc,"4.549,90"
+xfx,amd radeon rx 7600 speedster qick 308,"1.899,90"
+gigabyte,nvidia geforce rtx 4060 eagle oc,"2.499,90"
+galax,nvidia geforce rtx 4060 1-click oc 2x v2,"2.349,90"
+xfx,speedster amd radeon rx 6650 xt swft 210,"1.799,90"
+gigabyte,nvidia geforce rtx 4060 windforce oc,"2.499,90"
+msi,nvidia geforce gtx 1650 d6 ventus xs ocv3,"1.099,90"
+asrock,radeon rx 6600 challenger white,"1.579,90"
+asrock,amd radeon rx 7600 challenger oc,"1.899,90"
+asus,rog strix nvidia geforce rtx 4060 ti oc,"3.299,90"
+palit,nvidia geforce rtx 4060 infinity 2,"2.199,90"
+vxpro,nvidia geforce g210lp,"99,90"
+maxsun,intel arc b580 milestone,"1.979,90"
+gigabyte,nvidia geforce rtx 4070 ti super windforce max oc,"7.849,90"
+asrock,amd radeon rx 7600 steel legend oc,"2.199,90"
+asus,dual nvidia geforce rtx 4060 evo oc white,"2.599,90"
+afox,geforce gt 610,"159,90"
+afox,radeon rx 550,"469,90"
+placa,de video biostar,"399,90"
+galax,nvidia geforce rtx 3050 ex,"1.249,90"
+galax,nvidia geforce rtx 5070 ti ex 1-click oc,"8.699,90"
+galax,nvidia geforce rtx 5070 ti 1-click oc,"8.499,90"
