@@ -31,7 +31,6 @@ driver.execute_script("window.scrollTo(0, 500);")
 
 time.sleep(1)
 
-# Espera e fecha o modal (se existir)
 try:
     close_modal = WebDriverWait(driver, 10).until(
         EC.element_to_be_clickable((By.XPATH, "//*[@id='bannerPop']/div/div/button/span"))
@@ -46,19 +45,19 @@ try:
 except:
     print("Erro no try/expect 1")
 
-    # Para cada grid, extrai nome e marca
 for grid in product_grids:
     try:
-        # Extrai o texto do elemento h2 (nome e marca)
         name_element = grid.find_element(By.XPATH, './div/div[2]/div/div[2]/a/h2')
-        full_name = name_element.text.strip()
+        full_name = name_element.text.lower()
 
-        if "Placa de Vídeo" in full_name:
-            name_part = full_name.replace("Placa de Vídeo", "").strip()
+        if "placa de vídeo" in full_name:
+            name_part = full_name.replace("placa de vídeo", "").strip()
 
             name_part = name_part.split(",", 1)[0].strip()
         else:
-            name_part = full_name.split(",", 1)[0].split()
+            name_part = full_name.split(",", 1)[0].strip()
+
+        driver.execute_script("window.scrollTo(0, 10);")
 
         parts = name_part.split(" ", 1)
         brand = parts[0] if len(parts) > 0 else "Desconhecida"
@@ -76,9 +75,7 @@ with open("gpu_data.csv", "w", newline="", encoding="utf-8") as file:
     writer.writeheader()
     writer.writerows(gpu_data)
 
-# Fecha o navegador
+
 driver.quit()
 
 print(f"Dados salvos em gpu_data.csv com {len(gpu_data)} entradas.")
-
-driver.quit()

@@ -1,73 +1,101 @@
 Marca,Nome
-ASRock,Radeon RX 6600 Challenger D
-INNO3D,GeForce RTX 3060 TWIN X2
-Gigabyte,NVIDIA GeForce RTX 4070 WINDFORCE OC
-XFX,AMD Radeon RX 7600 Speedster QICK 308
-Galax,NVIDIA GeForce RTX 4060 1-Click OC 2X V2
-XFX,Speedster AMD Radeon RX 6650 XT SWFT 210
-Gigabyte,NVIDIA GeForce RTX 4060 EAGLE OC
-Gigabyte,NVIDIA GeForce RTX 4060 WINDFORCE OC
-ASRock,Radeon RX 6600 Challenger White
-Asus,ROG Strix NVIDIA GeForce RTX 4060 Ti OC
-AsRock,AMD Radeon RX 7600 Challenger OC
-Palit,NVIDIA GeForce RTX 4060 Infinity 2
-Gigabyte,NVIDIA GeForce RTX 4070 Ti Super WINDFORCE MAX OC
-ASRock,AMD Radeon RX 7600 Steel Legend OC
-Asus,Dual NVIDIA GeForce RTX 4060 EVO OC
-Afox,Radeon RX 550
-Galax,NVIDIA GeForce RTX 5070 Ti EX 1-Click OC
-Galax,NVIDIA GeForce RTX 5070 Ti 1-Click OC
-Galax,NVIDIA GeForce RTX 3050 EX
-MSI,NVIDIA GeForce RTX 5070 TI Vanguard SOC Launch Edition
-MSI,NVIDIA GeForce RTX 5080 Shadow 3X OC
-MSI,NVIDIA GeForce RTX 5080 Inspire 3X OC
-MSI,NVIDIA GeForce RTX 5070 Gaming Trio OC
-Gigabyte,NVIDIA GeForce RTX 5070 Ti Windforce OC SFF
-Gigabyte,NVIDIA GeForce RTX 5070 Gaming OC
-Gigabyte,NVIDIA GeForce RTX 5070 Ti Eagle OC Ice SFF
-Gigabyte,NVIDIA GeForce RTX 5070 Ti Gaming OC
-Gigabyte,NVIDIA GeForce RTX 5070 Ti AERO OC
-Gigabyte,NVIDIA GeForce RTX 5070 Ti Aorus Master
-Asus,TUF Gaming NVIDIA GeForce RTX 5070 OC Edition
-Sapphire,Pulse AMD Radeon RX 9070 Gaming
-PCYES,NVIDIA GeForce RTX 3050 Projeto Edge
-PCYES,NVIDIA GeForce RTX 3050 Projeto Edge
-PCYES,NVIDIA GeForce RTX 3050 Projeto Edge
-PCYES,NVIDIA GeForce RTX 3050 Projeto Edge
-MSI,NVIDIA GeForce RTX 5070 Ti Ventus 3X OC
-Asus,Dual NVIDIA GeForce RTX 4060 Ti EVO White OC Edition
-Asus,TUF Gaming NVIDIA GeForce RTX 5070 Ti OC Edition
-Gigabyte,NVIDIA GeForce RTX 5090 Gaming OC
-Gigabyte,NVIDIA GeForce RTX 5080 AORUS Master
-Gigabyte,NVIDIA GeForce RTX 5080 Gaming OC
-VXpro,NVIDIA GeForce GT710LP
-VXpro,NVIDIA GeForce GT1030LP
-VX,Pro NVIDIA GeForce GT730
-VX,Pro NVIDIA GeForce GT730
-VX,PRO NVIDIA GeForce GTX 750 Ti
-Asus,Dual NVIDIA GeForce RTX 4060 EVO OC White
-VX,Pro NVIDIA GeForce GTX 750 Ti
-PNY,NVIDIA GeForce RTX 4060 XLR8 Gaming Verto OC
-Asus,Dual NVIDIA GeForce RTX 4060 OC V2
-BRX,AMD Radeon RX 580
-BRX,AMD Radeon R5 240
-MSI,NVIDIA GeForce RTX 3050 VENTUS 2X OC
-Asus,Dual
-Zotac,NVIDIA GeForce RTX 4060 Twin Edge OC
-Sapphire,Pure AMD Radeon RX 7800 XT
-Asus,ProArt NVIDIA GeForce RTX 4060 OC
-AsRock,AMD Radeon RX 7700 XT Challenger OC
-AsRock,AMD Radeon RX 7800 XT Challenger OC
-Duex,NVIDIA GeForce GT740LP
-MSI,NVIDIA GeForce RTX 4060 Ti VENTUS 2X BLACK OC
-INNO3D,NVIDIA GeForce RTX 4060 Ti TWIN X2 OC WHITE
-INNO3D,NVIDIA GeForce RTX 4060 Ti X3 OC
-Asus,TUF Gaming NVIDIA GeForce RTX 4060 Ti OC
-INNO3D,NVIDIA GeForce GT730
-Gigabyte,NVIDIA GeForce RTX 5070 Ti Eagle OC SFF
-Gigabyte,NVIDIA GeForce RTX 5090 WINDFORCE OC
-Asus,Dual NVIDIA GeForce RTX 4060 Ti EVO OC
-Gigabyte,NVIDIA GeForce RTX 5090 Aorus Master Ice
-Gigabyte,NVIDIA GeForce RTX 5070 Eagle OC SFF
-Gigabyte,NVIDIA GeForce RTX 5070 AERO OC
-Gigabyte,AMD Radeon RX 9070 XT Gaming OC
+asrock,radeon rx 6600 challenger d
+inno3d,geforce rtx 3060 twin x2
+asus,dual amd radeon rx 7600 evo oc edition
+gigabyte,nvidia geforce rtx 4070 windforce oc
+xfx,amd radeon rx 7600 speedster qick 308
+galax,nvidia geforce rtx 4060 1-click oc 2x v2
+xfx,speedster amd radeon rx 6650 xt swft 210
+gigabyte,nvidia geforce rtx 4060 eagle oc
+gigabyte,nvidia geforce rtx 4060 windforce oc
+msi,nvidia geforce gtx 1650 d6 ventus xs ocv3
+asrock,radeon rx 6600 challenger white
+asus,rog strix nvidia geforce rtx 4060 ti oc
+asrock,amd radeon rx 7600 challenger oc
+palit,nvidia geforce rtx 4060 infinity 2
+gigabyte,nvidia geforce rtx 4070 ti super windforce max oc
+vxpro,nvidia geforce g210lp
+asrock,amd radeon rx 7600 steel legend oc
+asrock,intel arc b580 challenger oc
+asus,dual nvidia geforce rtx 4060 evo oc
+afox,geforce gt 610
+afox,radeon rx 550
+galax,nvidia geforce rtx 5070 ti ex 1-click oc
+galax,nvidia geforce rtx 5070 ti 1-click oc
+galax,nvidia geforce rtx 3050 ex
+msi,nvidia geforce rtx 5070 ti vanguard soc launch edition
+msi,nvidia geforce rtx 5080 shadow 3x oc
+msi,nvidia geforce rtx 5080 inspire 3x oc
+msi,nvidia geforce rtx 5070 gaming trio oc
+gigabyte,nvidia geforce rtx 5070 ti windforce oc sff
+gigabyte,nvidia geforce rtx 5070 gaming oc
+gigabyte,nvidia geforce rtx 5070 ti eagle oc ice sff
+gigabyte,nvidia geforce rtx 5070 ti gaming oc
+gigabyte,nvidia geforce rtx 5070 ti aero oc
+gigabyte,nvidia geforce rtx 5070 ti aorus master
+asus,tuf gaming nvidia geforce rtx 5070 oc edition
+sapphire,pulse amd radeon rx 9070 gaming
+pcyes,nvidia geforce rtx 3050 projeto edge
+pcyes,nvidia geforce rtx 3050 projeto edge
+pcyes,nvidia geforce rtx 3050 projeto edge
+pcyes,nvidia geforce rtx 3050 projeto edge
+msi,nvidia geforce rtx 5070 ti ventus 3x oc
+maxsun,intel arc b580 milestone
+maxsun,intel arc b580 icraft
+asus,dual nvidia geforce rtx 4060 ti evo white oc edition
+asus,tuf gaming nvidia geforce rtx 5070 ti oc edition
+gigabyte,nvidia geforce rtx 5090 gaming oc
+intel,arc b580 limited edition
+gigabyte,nvidia geforce rtx 5080 aorus master
+gigabyte,nvidia geforce rtx 5080 gaming oc
+vxpro,nvidia geforce gt 1030
+vxpro,nvidia geforce gt730lp
+vxpro,nvidia geforce gtx 1050 ti
+vxpro,nvidia geforce gt710lp
+vxpro,nvidia geforce gtx 1050
+vxpro,nvidia geforce gt1030lp
+vx,pro nvidia geforce gt730
+vxpro,nvidia geforce gt730lp
+vx,pro nvidia geforce gt730
+vx,pro nvidia geforce gt610lp
+vx,pro nvidia geforce gtx 750 ti
+asrock,intel arc b580 steel legend oc
+asrock,intel arc b570 challenger oc
+asus,dual nvidia geforce rtx 4060 evo oc white
+vx,pro nvidia geforce gtx 750 ti
+asus,prime nvidia geforce rtx 4060 ti oc edition
+pny,nvidia geforce rtx 4060 xlr8 gaming verto oc
+asus,dual nvidia geforce rtx 4060 oc v2
+vxpro,nvidia geforce gt730lp
+vxpro,nvidia geforce gtx 1050 ti
+brx,amd radeon rx 580
+gainward,nvidia geforce rtx 4060 python ii
+xfx,amd radeon rx 7900 gre
+zotac,gaming nvidia geforce rtx 3060
+pcyes,nvidia geforce gtx 750 ti
+brx,amd radeon r5 240
+msi,nvidia geforce rtx 3050 ventus 2x oc
+asus,dual
+zotac,nvidia geforce rtx 4060 twin edge oc
+sapphire,pure amd radeon rx 7800 xt
+asus,proart nvidia geforce rtx 4060 oc
+asrock,amd radeon rx 7900 xtx taichi white oc
+gigabyte,amd radeon rx 7700 xt gaming oc
+asrock,amd radeon rx 7700 xt challenger oc
+asrock,amd radeon rx 7800 xt challenger oc
+duex,nvidia geforce gt740lp
+msi,nvidia geforce rtx 4060 ti ventus 2x black oc
+inno3d,nvidia geforce rtx 4060 ti twin x2 oc white
+inno3d,nvidia geforce rtx 4060 ti x3 oc
+asus,tuf gaming nvidia geforce rtx 4060 ti oc
+inno3d,nvidia geforce gt730
+asrock,amd radeon rx 7900 xtx phantom gaming oc
+duex,nvidia geforce dx g210512
+gigabyte,nvidia geforce rtx 5070 ti eagle oc sff
+gigabyte,nvidia geforce rtx 5090 windforce oc
+asus,dual nvidia geforce rtx 4060 ti evo oc
+gigabyte,nvidia geforce rtx 5090 aorus master ice
+gigabyte,nvidia geforce rtx 5070 eagle oc sff
+gigabyte,nvidia geforce rtx 5070 aero oc
+gigabyte,amd radeon rx 9070 xt gaming oc
+asus,nvidia geforce rtx 4060 ti v2 oc ats
