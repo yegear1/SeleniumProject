@@ -7,7 +7,7 @@ from datetime import datetime
 import time
 
 def scrape_terabyte(driver):
-    time.sleep(3)
+    time.sleep(1)
     driver.get("https://www.terabyteshop.com.br/hardware/placas-de-video")
     time.sleep(1)
     driver.execute_script("window.scrollTo(0, 100);")

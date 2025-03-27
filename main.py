@@ -3,8 +3,12 @@ from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.support import expected_conditions as EC
 
-from scrapers import scrape_terabyte
+import pandas as pd
 
+from scrapers import scrape_terabyte
+from process_data import process_data
+
+import time
 import csv
 
 # Declarações para o navegador parecer mais humano
@@ -17,6 +21,8 @@ options.add_argument("--profile-directory=Profile 1") # Adiciona um perfil
 
 driver = webdriver.Chrome(options=options) 
 
+time.sleep(5)
+
 gpu_data = []
 
 gpu_data.extend(scrape_terabyte(driver)) # Puxa a lista da função scrape_terabyte
@@ -27,5 +33,10 @@ with open("gpu_data.csv", "w", newline="", encoding="utf-8") as file:
     writer.writeheader()
     writer.writerows(gpu_data)
 
+time.sleep(2)
+
+driver.execute_script("window.scrollTo(500, 700);")
+
 driver.quit()
+
 print(f"Dados salvos em gpu_data.csv com {len(gpu_data)} entradas.")
