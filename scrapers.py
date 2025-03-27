@@ -2,12 +2,14 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 
+from datetime import datetime
+
 import time
 
 def scrape_terabyte(driver):
     time.sleep(3)
     driver.get("https://www.terabyteshop.com.br/hardware/placas-de-video")
-
+    time.sleep(1)
     driver.execute_script("window.scrollTo(0, 100);")
     time.sleep(2)
 
@@ -30,6 +32,8 @@ def scrape_terabyte(driver):
 
     except:
         print("Erro em fechar o alerta de notificações")
+
+    current_date = datetime.now().strftime("%d/%m/%Y")
 
     gpu_data = []
     product_grids = driver.find_elements(By.XPATH, '//*[@id="prodarea"]/div[1]/div')
@@ -59,7 +63,7 @@ def scrape_terabyte(driver):
             brand = parts[0] if len(parts) > 0 else "Desconhecida"
             name = parts[1] if len(parts) > 1 else name_part
 
-            gpu_data.append({"Marca": brand, "Nome": name, "Preço": price})
+            gpu_data.append({"Marca": brand, "Nome": name, "Preço": price, "Data": current_date})
 
         except Exception as e:
             print(f"Erro ao extrair um produto da Terabyte: {e}")
