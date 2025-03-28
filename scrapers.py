@@ -6,6 +6,21 @@ from datetime import datetime
 
 import time
 
+def normalize_name(name_element):
+    full_name = name_element.text.lower()
+    
+    if "placa de vídeo" in full_name:
+        name_part = full_name.replace("placa de vídeo", "").strip()
+        name_part = name_part.split(",", 1)[0].strip()
+    else:
+        name_part = full_name.split(",", 1)[0].strip()
+
+
+    parts = name_part.split(" ", 1)
+
+    brand = parts[0] if len(parts) > 0 else "Desconhecida"
+    name = parts[1] if len(parts) > 1 else name_part
+
 def scrape_terabyte(driver):
     time.sleep(1)
     driver.get("https://www.terabyteshop.com.br/hardware/placas-de-video")
@@ -51,19 +66,16 @@ def scrape_terabyte(driver):
             price = price_text.replace("R$", "").replace("à vista", "").strip()
 
             name_element = grid.find_element(By.XPATH, './div/div[2]/div/div[2]/a/h2')
-            full_name = name_element.text.lower()
+            
+            brand, name = normalize_name(name_element)
 
-            if "placa de vídeo" in full_name:
-                name_part = full_name.replace("placa de vídeo", "").strip()
-                name_part = name_part.split(",", 1)[0].strip()
-            else:
-                name_part = full_name.split(",", 1)[0].strip()
-
-            parts = name_part.split(" ", 1)
-            brand = parts[0] if len(parts) > 0 else "Desconhecida"
-            name = parts[1] if len(parts) > 1 else name_part
-
-            gpu_data.append({"Marca": brand, "Nome": name, "Preço": price, "Data": current_date})
+            gpu_data.append
+            ({
+                "Marca": brand, 
+                "Nome": name, 
+                "Preço": price, 
+                "Data": current_date
+            })
 
         except Exception as e:
             print(f"Erro ao extrair um produto da Terabyte: {e}")
