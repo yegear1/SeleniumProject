@@ -17,9 +17,14 @@ options.add_argument("user-agent=Mozilla/5.0 (Windows NT 10.0; Win64; x64) Apple
 options.add_argument("user-data-dir=C:\\Users\\Y\\AppData\\Local\\Google\\Chrome\\User Data") # Adiciona um caminho para o user-data
 options.add_argument("--disable-blink-features=AutomationControlled")  # Remove sinal de automação
 options.add_argument("--profile-directory=Profile 1") # Adiciona um perfil
+options.add_argument("--disable-dev-shm-usage")  # Evita problemas de memória
 options.add_argument("--disable-extensions")
 options.add_argument("--start-maximized")
 options.add_argument("--lang=pt-BR")
+options.add_argument("--no-sandbox")  # Necessário em alguns sistemas
+options.add_argument("--headless")  # Executa sem interface gráfica
+
+
 
 options.add_experimental_option("excludeSwitches", ["enable-automation"])  # Remove switch de automação
 
