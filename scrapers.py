@@ -164,18 +164,19 @@ def scrape_terabyte(driver):
                 print("Erro em coletar o nome")
                 continue
 
-            full_name = name_element.textS
+            full_name = name_element.text
                 
             gpu_info = normalize_gpu_name(full_name)
 
-            marca = gpu_info['brand'][0]  # Pega o primeiro elemento da lista de marcas
-            modelo = gpu_info['gpu_model'][0]  # Pega o primeiro elemento da lista de modelos
+            brand = gpu_info['brand'][0]  # Pega o primeiro elemento da lista de marcas
+            name = gpu_info['gpu_model'][0]  # Pega o primeiro elemento da lista de modelos
             gpu_data.append({
-                "Marca": marca,
-                "Nome": modelo,
+                "Marca": brand,
+                "Nome": name,
                 "Preço": price,
                 "Data": current_date,
             })
+            return gpu_data
 
         except Exception as e:
             print(f"Erro ao extrair um produto da Terabyte: {e}")
