@@ -87,12 +87,12 @@ def normalize_gpu_name(name_element):
         "7900 xt",
         "7900 xtx"
     ],
-    "Arc": [
-        "A380",
-        "A580",
-        "A750",
-        "A770",
-        "B580"
+    "ARC": [
+        "a380",
+        "a580",
+        "a750",
+        "a770",
+        "b580"
     ]
     }
     '''
@@ -200,6 +200,7 @@ def scrape_terabyte(driver):
     current_date = datetime.now().strftime("%d/%m/%Y")
 
     gpu_data = []
+    site = "terabyte"
     product_grids = driver.find_elements(By.XPATH, '//*[@id="prodarea"]/div[1]/div')
 
     for grid in product_grids:
@@ -231,6 +232,7 @@ def scrape_terabyte(driver):
 
             if brand_gpu is not None:
                 gpu_data.append({
+                    "Site": site,
                     "Marca": brand_gpu,
                     "Nome": name_gpu,
                     "Preço": price,
