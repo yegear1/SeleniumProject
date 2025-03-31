@@ -13,35 +13,86 @@ def normalize_gpu_name(name_element):
     known_gpus = '''
     {
     "RTX": [
-    "1050",
-    "1060",
-    "2050",
-    "2060",
-    "3060",
-    "3070",
-    "3080",
-    "3090",
-    "4050",
-    "4060",
-    "4070 ti",
-    "4080",
-    "4090",
-    "5090"
+        "1050",
+        "1050 ti",
+        "1060",
+        "1070",
+        "1070 ti",
+        "1080",
+        "1080 ti",
+        "1650",
+        "1650 super",
+        "1660",
+        "1660 super",
+        "1660 ti",
+        "2060",
+        "2060 super",
+        "2070",
+        "2070 super",
+        "2080",
+        "2080 super",
+        "2080 ti",
+        "3050",
+        "3060",
+        "3060 ti",
+        "3070",
+        "3070 ti",
+        "3080",
+        "3080 ti",
+        "3090",
+        "3090 ti",
+        "4050",
+        "4060",
+        "4060 ti",
+        "4070",
+        "4070 super",
+        "4070 ti",
+        "4070 ti super",
+        "4080",
+        "4080 super",
+        "4090",
+        "4090 ti",
+        "5060",
+        "5070",
+        "5070 super",
+        "5070 ti",
+        "5080",
+        "5090"
     ],
     "RX": [
-    "550",
-    "560",
-    "570",
-    "580",
-    "590",
-    "6600",
-    "6700",
-    "6800",
-    "6900",
-    "7600",
-    "7700",
-    "7800",
-    "7900"
+        "550",
+        "560",
+        "570",
+        "580",
+        "580 xt",
+        "590",
+        "590 xt",
+        "6600",
+        "6600 xt",
+        "6650",
+        "6650 xt",
+        "6700",
+        "6700 xt",
+        "6800",
+        "6800 xt",
+        "6900",
+        "6900 xt",
+        "7600",
+        "7600 xt",
+        "7700",
+        "7700 xt",
+        "7800",
+        "7800 xt",
+        "7900",
+        "7900 xt",
+        "7900 xtx"
+    ],
+    "Arc": [
+        "A380",
+        "A580",
+        "A750",
+        "A770",
+        "B580"
     ]
     }
     '''
@@ -83,7 +134,7 @@ def normalize_gpu_name(name_element):
     # Identificar modelos de GPU (RTX e RX)
     for line in ["RTX", "RX"]:
         # Padrão para capturar números e sufixos como "TI" ou "Super"
-        padrao = re.compile(f"{line.lower()}\\s*(\\d+\\s*(ti|super)?)", re.IGNORECASE)
+        padrao = re.compile(f"{line.lower()}\\s*(\\d+\\s*(ti|super|xt|xtx|ti super)?)", re.IGNORECASE)
         matches = padrao.findall(full_name)
         
         for match in matches:
@@ -97,9 +148,18 @@ def normalize_gpu_name(name_element):
         if pattern.search(full_name):
             result["brand"].append(brand)
     
-    brand_gpu = result['brand'][0]
-    name_gpu = result['gpu_model'][0]
+    if result['brand'] and result['gpu_model']:
+        brand_gpu = result['brand'][0]
+        name_gpu = result['gpu_model'][0]
 
+        print(f"{brand_gpu}")
+        print(f"{name_gpu}")
+    else:
+        brand_gpu = None
+        name_gpu = None
+        print(f"Produto ignorado: Marca ou modelo não encontrados em '{full_name}'")
+
+    return brand_gpu, name_gpu
 
 def scrape_terabyte(driver):
     time.sleep(1)
@@ -160,7 +220,7 @@ def scrape_terabyte(driver):
             price = price_text.replace("R$", "").replace("à vista", "").strip()
 
             try:
-                name_element = grid.find_element(By.XPATH, '//*[@id="prodarea"]/div[1]/div[2]/div/div[2]/div/div[2]/a')
+                name_element = grid.find_element(By.XPATH, './div/div[2]/div/div[2]/a/h2')
             except:
                 print("Erro em coletar o nome")
                 continue
@@ -169,13 +229,15 @@ def scrape_terabyte(driver):
                 
             brand_gpu, name_gpu = normalize_gpu_name(full_name)
 
-            gpu_data.append({
-                "Marca": brand_gpu,
-                "Nome": name_gpu,
-                "Preço": price,
-                "Data": current_date,
-            })
-            return gpu_data
+            if brand_gpu is not None:
+                gpu_data.append({
+                    "Marca": brand_gpu,
+                    "Nome": name_gpu,
+                    "Preço": price,
+                    "Data": current_date,
+                })
+            else:
+                continue
 
         except Exception as e:
             print(f"Erro ao extrair um produto da Terabyte: {e}")
@@ -184,3 +246,4 @@ def scrape_terabyte(driver):
     time.sleep(2)
     driver.get("https://www.google.com")
     driver.execute_script("window.scrollTo(0, 500);")
+    return gpu_data
