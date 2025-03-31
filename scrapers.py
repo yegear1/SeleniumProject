@@ -96,8 +96,9 @@ def normalize_gpu_name(name_element):
         pattern = re.compile(re.escape(brand), re.IGNORECASE)
         if pattern.search(full_name):
             result["brand"].append(brand)
-
-    return result  
+    
+    brand_gpu = result['brand'][0]
+    name_gpu = result['gpu_model'][0]
 
 
 def scrape_terabyte(driver):
@@ -166,13 +167,11 @@ def scrape_terabyte(driver):
 
             full_name = name_element.text
                 
-            gpu_info = normalize_gpu_name(full_name)
+            brand_gpu, name_gpu = normalize_gpu_name(full_name)
 
-            brand = gpu_info['brand'][0]  # Pega o primeiro elemento da lista de marcas
-            name = gpu_info['gpu_model'][0]  # Pega o primeiro elemento da lista de modelos
             gpu_data.append({
-                "Marca": brand,
-                "Nome": name,
+                "Marca": brand_gpu,
+                "Nome": name_gpu,
                 "Preço": price,
                 "Data": current_date,
             })
