@@ -27,9 +27,9 @@ def process_data(csv_file="gpu_data.csv"):
         df = df.dropna(subset=["Preço"])
 
         # Exemplo de análise: Média de preço por marca
-        avg_price = df.groupby("Nome")["Preço"].mean().reset_index()
-        print("\nMédia de preço por placa:")
-        print(avg_price)
+        avg_price_by_brand = df.groupby("Marca")["Preço"].mean().reset_index()
+        print("\nMédia de preço por marca:")
+        print(avg_price_by_brand)
 
         # Cria um gráfico de linha: Preço ao longo do tempo por marca
         fig = px.line(df, x="Data", y="Preço", color="Marca", 
@@ -37,11 +37,11 @@ def process_data(csv_file="gpu_data.csv"):
                       labels={"Preço": "Preço (R$)", "Data": "Data"})
         fig.show()
 
-        # Cria um gráfico de barras: Média de preço por placa
-        fig_bar = px.bar(avg_price, x="Nome", y="Preço", 
-                         title="Média de Preço por Nome",
+        # Cria um gráfico de barras: Média de preço por marca
+        fig_bar = px.bar(avg_price_by_brand, x="Marca", y="Preço", 
+                         title="Média de Preço por Marca",
                          labels={"Preço": "Preço Médio (R$)"},
-                         color="Nome")
+                         color="Marca")
         fig_bar.show()
 
     except Exception as e:
