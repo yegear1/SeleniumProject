@@ -43,7 +43,6 @@ gpu_data.extend(scrape_terabyte(driver)) # Puxa a lista da função scrape_terab
 
 with open("gpu_data.csv", "a", newline="", encoding="utf-8") as file:
     writer = csv.DictWriter(file, fieldnames=["Site","Marca", "Nome", "Preço", "Data"])
-    #writer.writeheader()
     writer.writerows(gpu_data)
 
 driver.quit()
