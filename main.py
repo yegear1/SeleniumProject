@@ -7,8 +7,7 @@ from scrapers import scrape_terabyte
 
 import time
 import csv
-import os
-import json
+import psycopg2
 
 
 # Declarações para o navegador parecer mais humano
@@ -22,22 +21,19 @@ options.add_argument("--disable-extensions")
 options.add_argument("--start-maximized")
 options.add_argument("--lang=pt-BR")
 options.add_argument("--no-sandbox")  # Necessário em alguns sistemas
-options.add_argument("--headless")  # Executa sem interface gráfica
-
-
+#options.add_argument("--headless")  # Executa sem interface gráfica
 
 options.add_experimental_option("excludeSwitches", ["enable-automation"])  # Remove switch de automação
 
-
 driver = webdriver.Chrome(options=options) 
 
-time.sleep(3)
+time.sleep(5)
 
 gpu_data = []
 
 driver.get("https://www.google.com")
 
-time.sleep(1)
+time.sleep(2)
 
 gpu_data.extend(scrape_terabyte(driver)) # Puxa a lista da função scrape_terabyte
 
@@ -48,3 +44,58 @@ with open("gpu_data.csv", "a", newline="", encoding="utf-8") as file:
 driver.quit()
 
 print(f"Dados salvos em gpu_data.csv com {len(gpu_data)} entradas.")
+
+
+#Conecao com o banco
+try:
+    conn = psycopg2.connect(
+        dbname="gpus",
+        user="postgres",
+        password="postgres",
+        host="localhost",
+        port="5432"
+    )
+    cursor = conn.cursor()
+
+    new_entries = 0
+    for entry in gpu_data:
+        # Verifica se a placa já existe em gpu_info
+        cursor.execute(
+            "SELECT id FROM gpu_info WHERE marca = %s AND nome = %s",
+            (entry["Marca"], entry["Nome"])
+        )
+        result = cursor.fetchone()
+
+        if result:
+            gpu_id = result[0]
+        else:
+            # Insere a nova placa
+            cursor.execute(
+                "INSERT INTO gpu_info (marca, nome) VALUES (%s, %s) RETURNING id",
+                (entry["Marca"], entry["Nome"])
+            )
+            gpu_id = cursor.fetchone()[0]
+
+        # Verifica se já existe um preço para essa placa na mesma data
+        cursor.execute(
+            "SELECT 1 FROM gpu_prices WHERE gpu_id = %s AND data = %s",
+            (gpu_id, entry["Data"])
+        )
+        if cursor.fetchone():
+            continue  # Pula se já existe
+
+        # Insere o preço e a data
+        cursor.execute(
+            "INSERT INTO gpu_prices (gpu_id, preco, data) VALUES (%s, %s, %s)",
+            (gpu_id, entry["Preço"], entry["Data"])
+        )
+        new_entries += 1
+
+    # Commit e fecha a conexão
+    conn.commit()
+    cursor.close()
+    conn.close()
+    print(f"Dados salvos no PostgreSQL com {new_entries} novas entradas.")
+
+except Exception as e:
+    print(f"Erro ao conectar ou salvar no PostgreSQL: {e}")

@@ -162,7 +162,7 @@ def normalize_gpu_name(name_element):
     return brand_gpu, name_gpu
 
 def scrape_terabyte(driver):
-    time.sleep(1)
+    time.sleep(5)
 
     try:
         driver.get("https://www.terabyteshop.com.br/hardware/placas-de-video")
@@ -204,6 +204,7 @@ def scrape_terabyte(driver):
     product_grids = driver.find_elements(By.XPATH, '//*[@id="prodarea"]/div[1]/div')
 
     for grid in product_grids:
+        time.sleep(0.1)
         try:
             try:
                 grid.find_element(By.XPATH, './/div[contains(@class, "tbt_esgotado")]')
@@ -218,7 +219,7 @@ def scrape_terabyte(driver):
                 continue
             
             price_text = price_element.text.strip()
-            price = price_text.replace("R$", "").replace("à vista", "").strip()
+            price = price_text.replace("R$", "").replace("à vista", "").replace(".", "").replace(",", ".").strip()
 
             try:
                 name_element = grid.find_element(By.XPATH, './div/div[2]/div/div[2]/a/h2')
