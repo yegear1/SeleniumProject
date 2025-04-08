@@ -8,7 +8,6 @@ from selenium.webdriver.support import expected_conditions as EC
 from scrapers import scrape_terabyte
 from selenium_stealth import stealth
 
-import os
 import time
 import csv
 import psycopg2
@@ -16,12 +15,6 @@ import psycopg2
 
 # Declarações para o navegador parecer mais humano
 options = Options()
-
-#options.add_argument("user-agent=Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/134.0.0.0 Safari/537.36")  # User-agent real
-#options.add_argument("user-data-dir=C:\\Users\\Y\\AppData\\Local\\Google\\Chrome\\User Data") # Adiciona um caminho para o user-data
-#options.add_argument("--profile-directory=Profile 1") # Adiciona um perfil
-#options.add_argument("--disable-dev-shm-usage")  # Evita problemas de memória
-#options.add_argument("--lang=pt-BR")
 
 def create_driver():
     user_data_dir = os.getenv("USER_DATA_DIR", "/tmp/user_data")

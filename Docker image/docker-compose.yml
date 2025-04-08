@@ -1,0 +1,42 @@
+services:
+  postgres:
+    image: postgres:13
+    container_name: postgres_gpus
+    restart: always
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: gpus_db
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+      - ./init.sql:/docker-entrypoint-initdb.d/init.sql
+    networks:
+      - scraper-network
+
+  scraper:
+    build: .
+    container_name: selenium-scraper
+    restart: always
+    depends_on:
+      - postgres
+    environment:
+      - POSTGRES_HOST=postgres
+      - POSTGRES_PORT=5432
+      - POSTGRES_DB=gpus_db
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+      - USER_DATA_DIR=/app/user_data
+    networks:
+      - scraper-network
+    volumes:
+      - ./user_data1:/app/user_data
+      - ./:/app
+
+volumes:
+  postgres_data:
+
+networks:
+  scraper-network:
+    driver: bridge
