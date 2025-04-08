@@ -2,3 +2,8 @@ C:/Users/Y/AppData/Local/Google/Chrome/User Data/DevToolsActivePort
 __pycache__/scrapers.cpython-312.pyc
 C:/Users/Y/AppData/Local/Google/Chrome/User Data/chrome_debug.log
 C:/Users/Y/AppData/Local/Google/Chrome/User Data/DevToolsActivePort
+C:\Users\Y\AppData\Local\Google\Chrome\User Data/
+*.pb
+*.tflite
+*.old
+*.log
