@@ -8,28 +8,30 @@ from selenium.webdriver.support import expected_conditions as EC
 from scrapers import scrape_terabyte
 from selenium_stealth import stealth
 
-import os
 import time
-import csv
 import psycopg2
+import logging
+import os
+import tempfile
 
+logging.basicConfig(level=logging.INFO, format='%(levelname)s - %(message)s')
+logger = logging.getLogger(__name__)
 
-# Declarações para o navegador parecer mais humano
-options = Options()
+logger.info("Iniciando o script main.py")
+time.sleep(5)
 
-#options.add_argument("user-agent=Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/134.0.0.0 Safari/537.36")  # User-agent real
-#options.add_argument("user-data-dir=C:\\Users\\Y\\AppData\\Local\\Google\\Chrome\\User Data") # Adiciona um caminho para o user-data
-#options.add_argument("--profile-directory=Profile 1") # Adiciona um perfil
-#options.add_argument("--disable-dev-shm-usage")  # Evita problemas de memória
-#options.add_argument("--lang=pt-BR")
 
 def create_driver():
-    user_data_dir = os.getenv("USER_DATA_DIR", "/tmp/user_data")
-
+    logger.info("Criando driver do Selenium...")
     options = Options()
+    
+    user_data_dir = tempfile.mkdtemp(prefix="chrome-user-data-")
     options.add_argument(f"--user-data-dir={user_data_dir}")
+    
     options.add_argument("--disable-blink-features=AutomationControlled")
+    options.add_argument("--disable-dev-shm-usage")
     options.add_argument("--start-maximized")
+    options.add_argument("--no-sandbox")
     options.add_argument("--headless")
 
     options.add_experimental_option("excludeSwitches", ["enable-automation"])
@@ -52,40 +54,34 @@ def create_driver():
     )
     return driver
 
-time.sleep(5)
-
+logger.info("Iniciando loop principal...")
 while True:
+    driver = None
     try:
         driver = create_driver()
         time.sleep(10)
-        
+    
         gpu_data = []
+        logger.info("Iniciando scraping na Terabyte...")
         gpu_data.extend(scrape_terabyte(driver)) # Puxa a lista da função scrape_terabyte
-        print("Scraping na terabyte concluído.")
+        logger.info("Scraping na Terabyte concluído.")
 
         driver.quit()
 
     except Exception as e:
-        if 'driver' in locals():
+        if driver:
             driver.quit()
+        logger.exception("Erro ao criar o driver")  # mostra stacktrace
         continue
 
     try:
-        with open("gpu_data.csv", "a", newline="", encoding="utf-8") as file:
-            writer = csv.DictWriter(file, fieldnames=["Site", "Marca", "Nome", "Preço", "Data"])
-            writer.writerows(gpu_data)
-        print(f"Dados salvos em gpu_data.csv com {len(gpu_data)} entradas.")
-    except Exception as e:
-        print(f"Erro ao salvar no CSV: {e}")
-
-    #Conexão com o banco
-    try:
+        logger.info("Conectando ao PostgreSQL...")
         conn = psycopg2.connect(
-        dbname=os.getenv("POSTGRES_DB", "gpu_db"),
-        user=os.getenv("POSTGRES_USER", "postgres"),
-        password=os.getenv("POSTGRES_PASSWORD", "postgres"),
-        host=os.getenv("POSTGRES_HOST", "192.168.18.235"),
-        port=os.getenv("POSTGRES_PORT", "5432")
+          dbname=os.getenv("POSTGRES_DB", "gpus_db"),
+          user=os.getenv("POSTGRES_USER", "postgres"),
+          password=os.getenv("POSTGRES_PASSWORD", "postgres"),
+          host=os.getenv("POSTGRES_HOST", "192.168.18.235"),
+          port=os.getenv("POSTGRES_PORT", "5432")
         )
         cursor = conn.cursor()
 
@@ -103,7 +99,7 @@ while True:
             else:
                 # Insere a nova placa
                 cursor.execute(
-                    "INSERT INTO gpu_info (site, marca, nome) VALUES (%s, %s, %s) RETURNING id",
+                    "INSERT INTO gpu_info (website, marca, nome) VALUES (%s, %s, %s) RETURNING id",
                     (entry["Site"],entry["Marca"], entry["Nome"])
                 )
                 gpu_id = cursor.fetchone()[0]
@@ -127,7 +123,7 @@ while True:
         conn.commit()
         cursor.close()
         conn.close()
-        print(f"Dados salvos no PostgreSQL com {new_entries} novas entradas.")
+        logger.info(f"Dados salvos no PostgreSQL com {new_entries} novas entradas.")
 
         try:
             gpu_data = []
@@ -137,8 +133,9 @@ while True:
             continue
 
     except Exception as e:
-        print(f"Erro ao conectar ou salvar no PostgreSQL: {e}")
+        logger.info(f"Erro ao conectar ou salvar no PostgreSQL: {e}.")
+        
     
     time.sleep(43200)
 
-    print("\n EXECUTANDO DENOVO O SCRIPT \n")
+    logger.info("\nEXECUTANDO DENOVO O SCRIPT\n")

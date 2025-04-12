@@ -8,6 +8,10 @@ from datetime import datetime
 import time
 import re
 import json
+import logging
+
+logging.basicConfig(level=logging.INFO, format='%(levelname)s - %(message)s')
+logger = logging.getLogger(__name__)
 
 def normalize_gpu_name(name_element):
     known_gpus = '''
@@ -151,13 +155,15 @@ def normalize_gpu_name(name_element):
     if result['brand'] and result['gpu_model']:
         brand_gpu = result['brand'][0]
         name_gpu = result['gpu_model'][0]
-
-        print(f"{brand_gpu}")
-        print(f"{name_gpu}")
+        
+        
+        logger.info(f"{brand_gpu}")
+        logger.info(f"{name_gpu}")
     else:
         brand_gpu = None
         name_gpu = None
-        print(f"Produto ignorado: Marca ou modelo não encontrados em '{full_name}'")
+        logger.info(f"Produto ignorado: Marca ou modelo não encontrados em '{full_name}'")
+
 
     return brand_gpu, name_gpu
 
@@ -166,9 +172,10 @@ def scrape_terabyte(driver):
 
     try:
         driver.get("https://www.terabyteshop.com.br/hardware/placas-de-video")
-        WebDriverWait(driver, 10).until(EC.presence_of_element_located((By.ID, "prodarea")))
+        WebDriverWait(driver, 30).until(EC.presence_of_element_located((By.ID, "prodarea")))
+        logger.info("Site totalmente carregado, prosseguindo com a raspagem")
     except TimeoutException:
-        print("Tempo esgotado ao esperar pelo elemento 'prodarea'. Retornando lista vazia.")
+        logger.info("Tempo esgotado ao esperar pelo elemento 'prodarea'. Retornando lista vazia.")
         return []
 
     time.sleep(2)
@@ -182,9 +189,10 @@ def scrape_terabyte(driver):
             EC.element_to_be_clickable((By.XPATH, "//*[@id='bannerPop']/div/div/button/span"))
         )
         close_modal.click()
+        logger.info("Modal de promos fechado")
 
     except:
-        print("Erro em fechar o modal de promoções")
+        logger.info("Erro em fechar o modal de promoções")
 
     time.sleep(2)
 
@@ -200,11 +208,11 @@ def scrape_terabyte(driver):
     current_date = datetime.now().strftime("%d/%m/%Y")
 
     gpu_data = []
-    site = "terabyte"
+    website = "terabyte"
     product_grids = driver.find_elements(By.XPATH, '//*[@id="prodarea"]/div[1]/div')
 
     for grid in product_grids:
-        time.sleep(0.1)
+
         try:
             try:
                 grid.find_element(By.XPATH, './/div[contains(@class, "tbt_esgotado")]')
@@ -215,7 +223,7 @@ def scrape_terabyte(driver):
             try:
                 price_element = grid.find_element(By.XPATH, './div/div[2]/div/div[4]/div[1]/div[2]/span')
             except:
-                print("Erro em coletar o preço")
+                logger.info("Erro ao coletar o preço")
                 continue
             
             price_text = price_element.text.strip()
@@ -224,7 +232,7 @@ def scrape_terabyte(driver):
             try:
                 name_element = grid.find_element(By.XPATH, './div/div[2]/div/div[2]/a/h2')
             except:
-                print("Erro em coletar o nome")
+                logger.info("Erro ao coletar o nome")
                 continue
 
             full_name = name_element.text
@@ -233,7 +241,7 @@ def scrape_terabyte(driver):
 
             if brand_gpu is not None:
                 gpu_data.append({
-                    "Site": site,
+                    "Site": website,
                     "Marca": brand_gpu,
                     "Nome": name_gpu,
                     "Preço": price,
@@ -243,7 +251,7 @@ def scrape_terabyte(driver):
                 continue
 
         except Exception as e:
-            print(f"Erro ao extrair um produto da Terabyte: {e}")
+            logger.info(f"Erro ao extrair um produto da Terabyte: {e}")
             continue
 
     time.sleep(2)

@@ -1,7 +1,7 @@
 -- Tabela 1: Informações das Placas
 CREATE TABLE IF NOT EXISTS gpu_info (
     id SERIAL PRIMARY KEY,
-    site TEXT NOT NULL,
+    website TEXT NOT NULL,
     marca TEXT NOT NULL,
     nome TEXT NOT NULL,
     UNIQUE (marca, nome)
