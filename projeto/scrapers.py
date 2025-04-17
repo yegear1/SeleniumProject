@@ -51,7 +51,7 @@ def scrape_terabyte(driver):
         close_push.click()
 
     except:
-        logger.info("Erro em fechar o alerta de notificações")
+        print("Erro em fechar o alerta de notificações")
 
     current_date = datetime.now().strftime("%Y/%m/%d")
 
@@ -69,7 +69,7 @@ def scrape_terabyte(driver):
             try:
                 price_element = grid.find_element(By.XPATH, './div/div[2]/div/div[4]/div[1]/div[2]/span')
             except:
-                logger.error("Erro ao coletar o preço")
+                logger.info("Erro ao coletar o preço")
                 continue
 
             price = normalize_price(price_element)
@@ -77,7 +77,7 @@ def scrape_terabyte(driver):
             try:
                 name_element = grid.find_element(By.XPATH, './div/div[2]/div/div[2]/a/h2').text
             except:
-                logger.error("Erro ao coletar o nome")
+                logger.info("Erro ao coletar o nome")
                 continue
 
             brand_gpu, name_gpu = normalize_gpu_name(name_element)
@@ -94,13 +94,13 @@ def scrape_terabyte(driver):
                 continue
 
         except Exception as e:
-            logger.error(f"Erro ao extrair um produto da Terabyte: {e}")
+            logger.info(f"Erro ao extrair um produto da Terabyte: {e}")
             continue
 
     time.sleep(2)
     driver.get("https://www.google.com")
     driver.execute_script("window.scrollTo(0, 500);")
-    logger.info("\nScraping na Terabyte concluído.\n")
+    logger.info("Scraping na Terabyte concluído.")
     return gpu_data
 
 def scrape_pichau(driver):
@@ -121,7 +121,7 @@ def scrape_pichau(driver):
         )
         aria_label = last_page.get_attribute("aria-label")
         page_count = int(re.search(r'\d+', aria_label).group())
-        logger.info(f"==== Número total de páginas: {page_count} ====")
+        logger.info(f"Número total de páginas: {page_count}")
     except Exception as e:
         logger.error(f"Erro ao coletar o número de páginas: {e}")
         page_count = 1
@@ -199,5 +199,5 @@ def scrape_pichau(driver):
         else:
             break
 
-    logger.info("\nScraping na Pichau concluído.\n")
+    logger.info("Scraping na Pichau concluído.")
     return gpu_data
