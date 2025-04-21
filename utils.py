@@ -16,24 +16,24 @@ import tempfile
 import psycopg2
 
 
-logging.basicConfig(level=logging.INFO, format='%(levelname)s - %(message)s')
-logger = logging.getLogger(__name__)
+logger = logging.getLogger("main")
 
 
 def create_driver():
     logger.info("Criando driver do Selenium...")
     options = Options()
+    options.add_argument("--start-maximized")
     
+    options.add_experimental_option("excludeSwitches", ["enable-automation"])
+    options.add_experimental_option('useAutomationExtension', False)
+
     user_data_dir = tempfile.mkdtemp(prefix="chrome-user-data-")
     options.add_argument(f"--user-data-dir={user_data_dir}")
     
     options.add_argument("--disable-blink-features=AutomationControlled")
     options.add_argument("--disable-dev-shm-usage")
-    options.add_argument("--start-maximized")
     options.add_argument("--no-sandbox")
     options.add_argument("--headless")
-
-    options.add_experimental_option("excludeSwitches", ["enable-automation"])
 
     try:
         service = Service(ChromeDriverManager().install())
@@ -97,6 +97,7 @@ def normalize_gpu_name(name_element):
         "4090",
         "4090 ti",
         "5060",
+        "5060 ti",
         "5070",
         "5070 super",
         "5070 ti",
@@ -147,13 +148,15 @@ def normalize_gpu_name(name_element):
     {
     "brand": [
     "ASUS",
+    "AERO",
+    "EAGLEOC",
     "MSI",
     "Gigabyte",
     "ZOTAC",
     "PNY",
     "EVGA",
-    "Palit",
-    "Galax",
+    "PALIT",
+    "GALAX",
     "Inno3D",
     "Colorful",
     "Sapphire",
@@ -161,7 +164,7 @@ def normalize_gpu_name(name_element):
     "PCYES!",
     "PCYES",
     "XFX",
-    "ASRock",
+    "ASROCK",
     "HIS",
     "VisionTek",
     "AFOX",
@@ -223,48 +226,67 @@ def connect_db(gpu_data):
             user=os.getenv("POSTGRES_USER", "postgres"),
             password=os.getenv("POSTGRES_PASSWORD", "postgres"),
             host=os.getenv("POSTGRES_HOST", "192.168.18.235"),
-            port=os.getenv("POSTGRES_PORT", "5600")
+            port=os.getenv("POSTGRES_PORT", "5432")
         )
         cursor = conn.cursor()
 
         new_entries = 0
         for entry in gpu_data:
+            cursor.execute(
+                "SELECT id FROM website_id WHERE name = %s",
+                (entry["Site"],)
+            )
+            website_result = cursor.fetchone()
+            if not website_result:
+                # Se o site não existe, insere na tabela website_id
+                cursor.execute(
+                    "INSERT INTO website_id (name) VALUES (%s) RETURNING id",
+                    (entry["Site"],)
+                )
+                website_result = cursor.fetchone()
+                if website_result is None:
+                    raise ValueError(f"Falha ao inserir site {entry['Site']} em website_id")
+                website_id = website_result[0]
+            else:
+                website_id = website_result[0]
+
             # Verifica se a placa já existe em gpu_info
             cursor.execute(
                 "SELECT id FROM gpu_info WHERE marca = %s AND nome = %s",
                 (entry["Marca"], entry["Nome"])
             )
-            result = cursor.fetchone()
+            gpu_result = cursor.fetchone()
 
-            if result:
-                gpu_id = result[0]
+            if gpu_result:
+                gpu_id = gpu_result[0]
             else:
                 # Insere a nova placa
                 cursor.execute(
                     "INSERT INTO gpu_info (marca, nome) VALUES (%s, %s) RETURNING id",
                     (entry["Marca"], entry["Nome"])
                 )
-                gpu_id = cursor.fetchone()[0]
+                gpu_result = cursor.fetchone()
+                if gpu_result is None:
+                    raise ValueError(f"Falha ao inserir GPU {entry['Marca']} {entry['Nome']} em gpu_info")
+                gpu_id = gpu_result[0]
 
             # Verifica se já existe um preço para essa placa na mesma data
             cursor.execute(
-                "SELECT 1 FROM gpu_prices WHERE gpu_id = %s AND data = %s",
-                (gpu_id, entry["Data"])
+                "SELECT 1 FROM gpu_prices WHERE gpu_id = %s AND website_id = %s AND data = %s",
+                (gpu_id, website_id, entry["Data"])
             )
             if cursor.fetchone():
                 continue  # Pula se já existe
 
             # Insere o preço e a data
             cursor.execute(
-                "INSERT INTO gpu_prices (gpu_id, website, preco, data) VALUES (%s, %s, %s, %s)",
-                (gpu_id, entry["Site"], entry["Preço"], entry["Data"])
+                "INSERT INTO gpu_prices (gpu_id, website_id, preco, data) VALUES (%s, %s, %s, %s)",
+                (gpu_id, website_id, entry["Preço"], entry["Data"])
             )
             new_entries += 1
 
     # Commit e fecha a conexão
         conn.commit()
-        cursor.close()
-        conn.close()
         logger.info(f"Dados salvos no PostgreSQL com {new_entries} novas entradas.")
 
     except Exception as e:

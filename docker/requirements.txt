@@ -1,0 +1,5 @@
+selenium
+apscheduler
+webdriver-manager
+selenium-stealth
+psycopg2-binary
