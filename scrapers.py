@@ -3,7 +3,7 @@ from selenium.webdriver.support.ui import WebDriverWait
 from selenium.common.exceptions import TimeoutException
 from selenium.webdriver.support import expected_conditions as EC
 
-from utils import normalize_gpu_name, normalize_price, connect_db
+from utils import normalize_gpu_name, normalize_price
 
 import time
 import re
@@ -66,7 +66,7 @@ def scrape_terabyte(driver, current_date, site="terabyte", counters=None):
             try:
                 grid.find_element(By.XPATH, './/div[contains(@class, "tbt_esgotado")]')
                 logger.info(f"Produto esgotado")
-                continue
+                break
             except:
                 pass
             
@@ -76,21 +76,20 @@ def scrape_terabyte(driver, current_date, site="terabyte", counters=None):
                 logger.error("Erro ao coletar o preço")
                 continue
 
-            price = normalize_price(price_element)
-
             try:
                 name_element = grid.find_element(By.XPATH, './div/div[2]/div/div[2]/a/h2').text
             except:
                 logger.error("Erro ao coletar o nome")
                 continue
-
+            
+            price = normalize_price(price_element.text)
             brand_gpu, name_gpu = normalize_gpu_name(name_element)
 
             counters[site]["total_gpu"] += 1
 
             if brand_gpu is not None:
                 gpu_data.append({
-                    "Site": "terabyte",
+                    "Fonte": "terabyte",
                     "Marca": brand_gpu,
                     "Nome": name_gpu,
                     "Preço": price,
@@ -157,7 +156,7 @@ def scrape_pichau(driver, current_date, site="pichau", counters=None):
                 try:
                     grid.find_element(By.CLASS_NAME, 'mui-8rpawh-out_of_stock')
                     logger.info(f"Produto esgotado")
-                    continue
+                    break
                 except:
                     pass
 
@@ -173,7 +172,7 @@ def scrape_pichau(driver, current_date, site="pichau", counters=None):
                     logger.info("Erro ao coletar o preço")
                     continue
                 
-                price = normalize_price(price_element)
+                price = normalize_price(price_element.text)
 
                 brand_gpu, name_gpu = normalize_gpu_name(name_element)
 
@@ -181,7 +180,7 @@ def scrape_pichau(driver, current_date, site="pichau", counters=None):
 
                 if brand_gpu is not None:
                     gpu_data.append({
-                        "Site": "pichau",
+                        "Fonte": "pichau",
                         "Marca": brand_gpu,
                         "Nome": name_gpu,
                         "Preço": price,
@@ -216,7 +215,7 @@ def scrape_pichau(driver, current_date, site="pichau", counters=None):
     logger.info("Scraping na Pichau concluido\n\n")
     return gpu_data
 
-def scrape_kabum(driver, current_date, site="terabyte", counters=None):
+def scrape_kabum(driver, current_date, site="kabum", counters=None):
     logger.info("\n\nIniciando o scrapping na Kabum\n\n")
     time.sleep(5)
 
@@ -269,9 +268,9 @@ def scrape_kabum(driver, current_date, site="terabyte", counters=None):
                 
                 driver.execute_script("window.scrollTo(0, 300);")
 
-                price = normalize_price(price_element)
+                price = normalize_price(price_element.text)
                 
-                time.sleep(3)
+                time.sleep(1)
 
                 brand_gpu, name_gpu = normalize_gpu_name(name_element)
 
@@ -281,7 +280,7 @@ def scrape_kabum(driver, current_date, site="terabyte", counters=None):
 
                 if brand_gpu is not None:
                     gpu_data.append({
-                        "Site": "kabum",
+                        "Fonte": "kabum",
                         "Marca": brand_gpu,
                         "Nome": name_gpu,
                         "Preço": price,
