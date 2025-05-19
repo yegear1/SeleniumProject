@@ -222,8 +222,8 @@ def normalize_price(price_element):
         return None
     else:
         try:
-            price_pattern = re.compile(r'R\$\s*([0-9,.]+)', re.IGNORECASE)
-            price_text = price_element
+            price_pattern = re.compile(r'(?:R\$\s*)?([0-9,.]+)', re.IGNORECASE)
+            price_text = str(price_element)
 
             match = re.search(price_pattern, price_text)
             if match:
@@ -349,4 +349,8 @@ def save_csv(gpu_data):
         writer = csv.DictWriter(file, fieldnames=["Fonte", "Marca", "Nome", "Preço", "Data"])
         writer.writeheader()
         writer.writerows(gpu_data)
+        #read = csv.reader(gpu_data)
+        #for row in read:
+        #    normalize_price(row)
     logger.info("Salvo em gpu_data")
+

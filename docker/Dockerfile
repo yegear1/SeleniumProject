@@ -23,26 +23,20 @@ RUN wget -qO - https://dl.google.com/linux/linux_signing_key.pub | apt-key add -
     apt-get install -y --no-install-recommends google-chrome-stable && \
     rm -rf /var/lib/apt/lists/*
 
-# Cria um usu�rio n�o-root
 RUN useradd -m -s /bin/bash appuser
 
-# Configura o ambiente virtual
 RUN python3 -m venv /opt/venv \
     && chown -R appuser:appuser /opt/venv
 ENV PATH="/opt/venv/bin:$PATH"
 ENV PYTHONUNBUFFERED=1
 
-# Define o diret�rio de trabalho
 WORKDIR /app
 
-# Copia e instala as depend�ncias Python
 COPY requirements.txt .
 RUN pip install --no-cache-dir -r requirements.txt
 
-# Copia os arquivos do projeto
 COPY main.py scrapers.py utils.py .
 
-# Ajusta as permiss�es dos arquivos para o usu�rio appuser
 RUN chown -R appuser:appuser /app
 
 # Muda para o usu�rio n�o-root

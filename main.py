@@ -66,7 +66,8 @@ def scrape_task():
         for site, counts in site_counters.items():
             logger.info(f"Site {site}: {counts['total_gpu']} coletadas, {counts['num_gpu']} salvas")
 
-        connect_db(gpu_data)
+        #connect_db(gpu_data)
+        save_csv(gpu_data)
         gpu_data.clear()
         logger.info("gpu_data limpa")
 
