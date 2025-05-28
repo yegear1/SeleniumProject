@@ -1,0 +1,13 @@
+Fase 1 (Novembro 2022 - Agosto 2023)
+
+Etherium merge
+ - varejistas gerenciando seus estoques
+ - Demanda residual por GPUs
+ - Atraso na saturação do mercado
+ 
+ - O lançamento da NVIDIA RTX 4090 (outubro de 2022) e da RTX 4080 (novembro de 2022) , bem como da série RX 7000 da AMD (RX 7900 XTX e XT em dezembro de 2022) , isso controla o estoque da linha 3000 a se manter baixo para que o preço não tenha uma queda, já que isso causaria um desvio de atenção.
+
+Fase 2 (Setembro 2023 - 
+
+ - Setembro 2023, lançamento 7800 XT e 7700 XT, aumento de concorrência no mid-high end
+ - Janeiro 2024 - Abril 2024, queda histórica, lançamento 4070 (super,ti,ti super)
