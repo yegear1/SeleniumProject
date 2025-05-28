@@ -1,6 +1,5 @@
 import requests
 import json
-import time
 from datetime import datetime
 import pandas as pd
 import io
@@ -27,7 +26,6 @@ def collect_data():
         data = response.json()
 
         prices = data["pageProps"]["last12MonthsChart"]
-        #msrp = price["pageProps"]["same"]
 
         price_data = [
             [f"{entry['year']}-{MONTH_MAP[entry['month']]}-01", float(entry["used"]), float(entry["new"])]

@@ -1,5 +1,9 @@
-Fase 1 (Novembro 2022 - Agosto 2023)
+Contexto (Pre grafico)
+ - Pandemia global, inicia lockdown na china no dia 23/01/2020 [https://pt.wikipedia.org/wiki/Confinamentos_da_COVID-19_na_China]
+ - A permanencia das pessoas em casa aumenta exponecialmente o uso de equipamentos eletronicos, como computadores e celulares, principalmente devido ao acesso remoto e entreterimento
+ - Isso somado  as interrupcoes nas fabricas em taiwan, iniciam o Marco da crise de semicondutores
 
+Fase 1 (Novembro 2022 - Agosto 2023)
 Etherium merge
  - varejistas gerenciando seus estoques
  - Demanda residual por GPUs
