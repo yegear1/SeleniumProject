@@ -1,10 +1,6 @@
 import requests
-import json
-import re
-from datetime import datetime
 import pandas as pd
-import os
-import csv
+
 
 #url = "https://bestvaluegpu.com/_next/data/qUyCEpFqNx_bdUOLJ_peB/en-us/history/new-and-used-rtx-3070-price-history-and-specs.json?slug=new-and-used-rtx-3070-price-history-and-specs"
 
