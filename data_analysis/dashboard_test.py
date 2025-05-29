@@ -1,178 +1,68 @@
-import dash
-from dash import dcc, html
-import pandas as pd
-from sqlalchemy import create_engine
-import os
+import requests
 import json
-import logging
+import pandas as pd
+import os # Essencial para verificar a existência do arquivo
 
-# Configurar logging
-logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
-logger = logging.getLogger(__name__)
+# --- Configuração ---
+# AVISO: O código no meio da URL (qUyCEp...) é temporário e mudará,
+# fazendo com que este link direto pare de funcionar no futuro.
+name = "3060"
+url = f"https://bestvaluegpu.com/_next/data/qUyCEpFqNx_bdUOLJ_peB/en-us/history/new-and-used-rtx-{name}-price-history-and-specs.json?slug=new-and-used-rtx-{name}-price-history-and-specs"
 
-# Configuração do banco de dados
-db_config = {
-    'dbname': os.getenv("POSTGRES_DB", "gpus_db"),
-    'user': os.getenv("POSTGRES_USER", "postgres"),
-    'password': os.getenv("POSTGRES_PASSWORD", "postgres"),
-    'host': os.getenv("POSTGRES_HOST", "192.168.18.235"),
-    'port': os.getenv("POSTGRES_PORT", "5432")
+MONTH_MAP = {
+    "Jan": "01", "Feb": "02", "Mar": "03", "Apr": "04", "May": "05", "Jun": "06",
+    "Jul": "07", "Aug": "08", "Sep": "09", "Oct": "10", "Nov": "11", "Dec": "12"
 }
 
-# Função para conectar ao banco e buscar os dados
-def fetch_data():
+def collect_and_save_data():
+    """
+    Função principal que busca, processa e salva os dados em um único fluxo.
+    """
     try:
-        conn_str = f"postgresql://{db_config['user']}:{db_config['password']}@{db_config['host']}:{db_config['port']}/{db_config['dbname']}"
-        engine = create_engine(conn_str)
-        query = """
-        SELECT g.marca, g.nome, w.name AS website, p.preco, p.data
-        FROM gpu_prices p
-        JOIN gpu_info g ON p.gpu_id = g.id
-        JOIN website_id w ON p.website_id = w.id
-        """
-        df = pd.read_sql(query, engine)
-        engine.dispose()
-        logger.info(f"Dados carregados: {len(df)} linhas")
-        if df.empty:
-            logger.warning("DataFrame vazio. Verifique se as tabelas têm dados.")
-        else:
-            logger.info(f"Primeiras linhas do DataFrame:\n{df.head()}")
-        return df
+        # 1. BUSCAR OS DADOS
+        print(f"Buscando dados para RTX-{name}...")
+        response = requests.get(url)
+        response.raise_for_status()  # Lança um erro se a requisição falhar (ex: 404)
+        data = response.json()
+        print("-> Dados recebidos com sucesso.")
+
+        # 2. PROCESSAR OS DADOS
+        prices = data["pageProps"]["last12MonthsChart"]
+        price_data = [
+            # Seleciona apenas as colunas que vamos usar no arquivo final
+            [name, f"{entry['year']}-{MONTH_MAP[entry['month']]}-01", float(entry["new"])]
+            for entry in prices
+        ]
+        
+        # Cria o DataFrame final diretamente com as colunas certas
+        df_final = pd.DataFrame(price_data, columns=['Modelo', 'Data', 'Preco'])
+        print("-> DataFrame processado em memória:")
+        print(df_final.head())
+
+        # 3. SALVAR OU ANEXAR AO ARQUIVO CSV
+        nome_arquivo_saida = 'gpu_data.csv'
+        
+        # Verifica se o arquivo já existe para decidir sobre o cabeçalho
+        arquivo_existe = os.path.exists(nome_arquivo_saida)
+        
+        print(f"-> Tentando salvar/anexar em '{nome_arquivo_saida}'...")
+        
+        df_final.to_csv(
+            nome_arquivo_saida,
+            mode='a',             # 'a' para anexar (append)
+            header=not arquivo_existe, # Só escreve o cabeçalho se o arquivo NÃO existir
+            index=False           # Não escreve o índice do pandas
+        )
+        
+        print(f"SUCESSO! Dados foram salvos em '{nome_arquivo_saida}'.")
+
+    except requests.exceptions.RequestException as e:
+        print(f"ERRO DE REDE: Não foi possível baixar os dados. {e}")
+    except KeyError as e:
+        print(f"ERRO NO JSON: A estrutura dos dados mudou. Chave não encontrada: {e}")
     except Exception as e:
-        logger.error(f"Erro ao conectar ao banco: {e}")
-        return pd.DataFrame()
+        # Este 'except' genérico agora pegará QUALQUER erro, incluindo na hora de salvar
+        print(f"ERRO INESPERADO: Ocorreu uma falha. Mensagem: {e}")
 
-# Carregar os dados
-df = fetch_data()
-
-# Inicializar o app Dash
-app = dash.Dash(__name__, external_scripts=[
-    "https://cdn.jsdelivr.net/npm/echarts@5.4.3/dist/echarts.min.js"  # Carregar ECharts via CDN
-])
-
-# Criar opções para o dropdown
-gpu_options = [{'label': 'Todas as Placas', 'value': 'Todas as Placas'}] + \
-              [{'label': f"{row['marca']} {row['nome']}", 'value': f"{row['marca']} {row['nome']}"}
-               for _, row in df.drop_duplicates(['marca', 'nome']).iterrows()]
-
-# Layout do dashboard
-app.layout = html.Div([
-    html.H1("Dashboard de Preços de Placas de Vídeo"),
-    
-    # Dropdown para selecionar a GPU
-    dcc.Dropdown(
-        id='gpu-dropdown',
-        options=gpu_options,
-        value='Todas as Placas',
-        placeholder="Selecione uma GPU",
-        style={'width': '50%'}
-    ),
-    
-    # Div para o gráfico ECharts
-    html.Div(id='price-graph', style={'width': '100%', 'height': '400px'})
-])
-
-# Callback para atualizar o gráfico
-@app.callback(
-    dash.dependencies.Output('price-graph', 'children'),
-    [dash.dependencies.Input('gpu-dropdown', 'value')]
-)
-def update_graph(selected_gpu):
-    logger.info(f"Atualizando gráfico para GPU: {selected_gpu}")
-    
-    if not selected_gpu or df.empty:
-        logger.warning("Nenhum dado disponível ou GPU não selecionada.")
-        return html.Div("Nenhum dado disponível")
-
-    # Filtrar os dados
-    try:
-        if selected_gpu == 'Todas as Placas':
-            filtered_df = df.copy()
-            filtered_df['gpu'] = filtered_df['marca'] + ' ' + filtered_df['nome']
-        else:
-            marca, nome = selected_gpu.split(' ', 1)
-            filtered_df = df[(df['marca'] == marca) & (df['nome'] == nome)]
-            filtered_df['gpu'] = filtered_df['marca'] + ' ' + filtered_df['nome']
-
-        if filtered_df.empty:
-            logger.warning(f"Nenhum dado encontrado para a GPU: {selected_gpu}")
-            return html.Div(f"Nenhum dado encontrado para {selected_gpu}")
-
-        logger.info(f"Dados filtrados: {len(filtered_df)} linhas")
-
-        # Preparar os dados para ECharts
-        data_by_website = {}
-        for website in filtered_df['website'].unique():
-            website_df = filtered_df[filtered_df['website'] == website]
-            website_df = website_df.sort_values('data')  # Ordenar por data
-            data_by_website[website] = [
-                [row['data'].strftime('%Y-%m-%d'), float(row['preco'])]  # Garantir que preco é float
-                for _, row in website_df.iterrows()
-            ]
-
-        logger.info(f"Dados preparados para ECharts: {data_by_website}")
-
-        # Configuração do gráfico ECharts para replicar o estilo do Chart.js
-        echarts_option = {
-            'tooltip': {
-                'trigger': 'axis',
-                'formatter': "{b0}<br/>{a0}: {c0} R$"
-            },
-            'legend': {
-                'top': '0%',  # Posicionar a legenda no topo
-                'left': 'center'
-            },
-            'xAxis': {
-                'type': 'time',
-                'axisLabel': {
-                    'formatter': '{dd} de {MMM}'  # Formato: "25 de Abr"
-                }
-            },
-            'yAxis': {
-                'type': 'value',
-                'name': 'R$',
-                'axisLabel': {
-                    'formatter': 'R$ {value}'
-                }
-            },
-            'series': [
-                {
-                    'name': website,
-                    'type': 'line',
-                    'data': data,
-                    # Removido 'areaStyle' para não ter área sombreada
-                    'showSymbol': False  # Não mostrar pontos nas linhas
-                }
-                for website, data in data_by_website.items()
-            ]
-        }
-
-        # Converter echarts_option para string JSON
-        echarts_option_json = json.dumps(echarts_option)
-
-        # JavaScript para renderizar o gráfico ECharts
-        echarts_script = f"""
-        setTimeout(function() {{
-            var chartDom = document.getElementById('echarts-graph');
-            if (chartDom) {{
-                var chart = echarts.init(chartDom);
-                chart.setOption({echarts_option_json});
-            }} else {{
-                console.error('Elemento echarts-graph não encontrado');
-            }}
-        }}, 100);
-        """
-
-        logger.info("Gráfico ECharts configurado e script gerado.")
-
-        return html.Div([
-            html.Div(id='echarts-graph', style={'width': '100%', 'height': '400px'}),
-            html.Script(echarts_script)
-        ])
-    except Exception as e:
-        logger.error(f"Erro ao atualizar o gráfico: {e}")
-        return html.Div(f"Erro ao gerar o gráfico: {str(e)}")
-
-# Rodar o servidor
-if __name__ == '__main__':
-    app.run(debug=True, host='0.0.0.0', port=8050)
+# --- Executa a função ---
+collect_and_save_data()

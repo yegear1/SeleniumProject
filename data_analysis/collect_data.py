@@ -1,11 +1,12 @@
 import requests
 import json
+import re
 from datetime import datetime
 import pandas as pd
-import io
+import os
 import csv
 
-#url = "https://bestvaluegpu.com/_next/data/OHyU4TxlX6gfbdcp3al62/en-us/history/new-and-used-rtx-3070-price-history-and-specs.json?slug=new-and-used-rtx-3070-price-history-and-specs"
+#url = "https://bestvaluegpu.com/_next/data/qUyCEpFqNx_bdUOLJ_peB/en-us/history/new-and-used-rtx-3070-price-history-and-specs.json?slug=new-and-used-rtx-3070-price-history-and-specs"
 
 # Dicionário para mapear nomes de meses para números
 MONTH_MAP = {
@@ -13,9 +14,9 @@ MONTH_MAP = {
     "Jul": "07", "Aug": "08", "Sep": "09", "Oct": "10", "Nov": "11", "Dec": "12"
 }
 
-name = "3070-ti"
+name = "3080"
 
-url = f"https://bestvaluegpu.com/_next/data/OHyU4TxlX6gfbdcp3al62/en-us/history/new-and-used-rtx-{name}-price-history-and-specs.json?slug=new-and-used-rtx-{name}-price-history-and-specs"
+url = f"https://bestvaluegpu.com/_next/data/qUyCEpFqNx_bdUOLJ_peB/en-us/history/new-and-used-rtx-{name}-price-history-and-specs.json?slug=new-and-used-rtx-{name}-price-history-and-specs"
 
 
 def collect_data():
@@ -44,16 +45,19 @@ def collect_data():
             # 5. Exibir o resultado da transformação
             print("--- DataFrame Transformado ---")
             print(df_transformado.head())
+        except Exception as e:
+            print(f"Falhou em tratar os dados: {e}")
 
-            # 6. Salvar o novo DataFrame em um arquivo CSV sem cabeçalho e sem o índice
-            nome_arquivo_saida = f'{name}_data.csv'
+        try:
+            nome_arquivo_saida = 'gpu_data.csv'
             df_transformado.to_csv(
                 nome_arquivo_saida,
+                mode='a',
                 header=False,  # Não escreve a linha de cabeçalho (Modelo, date, Preco)
                 index=False    # Não escreve o índice da linha (0, 1, 2...)
             )
         except Exception as e:
-            print(f"Falhou em tratar os dados: {e}")
+            print(f"Falhou em salvar os dados: {e}")
 
     except requests.exceptions.RequestException as e:
         print(f"Erro ao coletar o JSON: {e}")
