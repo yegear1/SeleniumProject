@@ -5,6 +5,7 @@ from scrapers import scrape_terabyte, scrape_pichau, scrape_kabum
 from utils import create_driver, save_csv, connect_db
 
 import logging
+import logging.handlers
 import time
 import os
 
@@ -21,21 +22,26 @@ logger.addHandler(console_handler)
 
 os.makedirs("logs", exist_ok=True)
 
+num=1
+file_handler = logging.handlers.TimedRotatingFileHandler(
+    filename=f"logs/scraping_{num}.log",
+    when='D',
+    interval=1,
+    backupCount=5,
+    encoding='utf-8'
+)
+file_handler.setFormatter(log_formatter)
+file_handler.setLevel(logging.INFO)
+logger.addHandler(file_handler)
+
 site_counters = {
     "terabyte": {"total_gpu": 0, "num_gpu": 0},
     "pichau": {"total_gpu": 0, "num_gpu": 0},
     "kabum": {"total_gpu": 0, "num_gpu": 0},
 }
 
-num=1
 def scrape_task():
     current_date = datetime.now().strftime("%Y-%m-%d")
-
-    log_filename = f"logs/scraping_{num}_{datetime.now().strftime('%Y-%m-%d_%H')}.log"
-    file_handler = logging.FileHandler(log_filename, encoding='utf-8')
-    file_handler.setFormatter(log_formatter)
-    file_handler.setLevel(logging.INFO)
-    logger.addHandler(file_handler)
 
     logger.info(f"\n\nIniciando a função scrape_task em {datetime.now()}\n")
 
@@ -73,14 +79,10 @@ def scrape_task():
 
     except Exception as e:
         logger.error(f"Erro ao salvar no banco: {e}")
-    
-    logger.info(f"Salvando log {log_filename}")
-    file_handler.close()
-    logger.removeHandler(file_handler) 
 
 logger.info(f"\n\nIniciando o script main.py em {datetime.now()}\n")
 
 while True:
     scrape_task()
     num+=1
-    time.sleep(3600)
+    time.sleep(1)

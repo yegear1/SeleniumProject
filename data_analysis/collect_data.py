@@ -10,9 +10,9 @@ MONTH_MAP = {
     "Jul": "07", "Aug": "08", "Sep": "09", "Oct": "10", "Nov": "11", "Dec": "12"
 }
 
-name = "3080"
+name = "6700-xt"
 
-url = f"https://bestvaluegpu.com/_next/data/qUyCEpFqNx_bdUOLJ_peB/en-us/history/new-and-used-rtx-{name}-price-history-and-specs.json?slug=new-and-used-rtx-{name}-price-history-and-specs"
+url = f"https://bestvaluegpu.com/_next/data/X3q5RWaitrv6uLcZrPsdF/en-us/history/new-and-used-rx-{name}-price-history-and-specs.json?slug=new-and-used-rtx-{name}-price-history-and-specs"
 
 
 def collect_data():
@@ -24,29 +24,42 @@ def collect_data():
 
         prices = data["pageProps"]["last12MonthsChart"]
 
-        price_data = [
-            [f"{entry['year']}-{MONTH_MAP[entry['month']]}-01", float(entry["used"]), float(entry["new"])]
-            for entry in prices
-        ]
-
+        price_data = []
+        for entry in prices:
+            new_price_value = entry.get("new") # Usar .get() é mais seguro que acesso direto
+            
+            if new_price_value is not None and new_price_value != '':
+                # Se tiver valor, converte para float
+                new_price = float(new_price_value)
+            else:
+                # Se for None ou string vazia, usa NaN (Not a Number)
+                new_price = float('nan') 
+            
+            price_data.append([
+                name, # Nome da placa
+                f"{entry['year']}-{MONTH_MAP[entry['month']]}-01", # Data formatada
+                new_price # Preço (pode ser float ou NaN)
+            ])
         try:
             # 1. Carregar o arquivo CSV original
-            df = pd.DataFrame(price_data, columns=['date', 'used', 'new'])
+            df = pd.DataFrame(price_data, columns=['Modelo', 'Data', 'Preco'])
+
+            df.dropna(subset=['Preco'], inplace=True)
 
             # 2. Selecionar as colunas de interesse ('date' e 'new')
-            df_transformado = df[['date', 'new']].copy()
+            #df_transformado = df[['date', 'new']].copy()
 
-            df_transformado.insert(0, 'Modelo', name)
+            #df_transformado.insert(0, 'Modelo', name)
 
             # 5. Exibir o resultado da transformação
             print("--- DataFrame Transformado ---")
-            print(df_transformado.head())
+            print(df.head())
         except Exception as e:
             print(f"Falhou em tratar os dados: {e}")
 
         try:
             nome_arquivo_saida = 'gpu_data.csv'
-            df_transformado.to_csv(
+            df.to_csv(
                 nome_arquivo_saida,
                 mode='a',
                 header=False,  # Não escreve a linha de cabeçalho (Modelo, date, Preco)
