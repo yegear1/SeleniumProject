@@ -3,6 +3,7 @@ from selenium import webdriver
 from webdriver_manager.chrome import ChromeDriverManager
 from selenium.webdriver.chrome.service import Service
 from selenium.webdriver.chrome.options import Options
+from selenium.webdriver.common.action_chains import ActionChains
 from selenium.webdriver.support import expected_conditions as EC
 
 from selenium_stealth import stealth
@@ -11,6 +12,8 @@ import re
 import os
 import csv
 import json
+import time
+import random
 import logging
 import tempfile
 import psycopg2
@@ -95,7 +98,10 @@ known_gpus = '''
     "7900 xt",
     "7900 xtx",
     "9070",
-    "9070 xt"
+    "9070 xt",
+    "9060",
+    "9060 xt"
+    
 ],
 "ARC": [
     "a380",
@@ -149,8 +155,10 @@ def create_driver():
     
     options.add_argument("--disable-blink-features=AutomationControlled")
     options.add_argument("--disable-dev-shm-usage")
+    options.add_argument("--disable-notifications")
+    options.add_argument("window-size=1920,1080")
+    options.add_argument("--start-maximized")
     options.add_argument("--no-sandbox")
-    options.add_argument("--headless")
 
     try:
         service = Service(ChromeDriverManager().install())
@@ -263,6 +271,31 @@ def normalize_string(message):
     except Exception as e:
         logger.info(f"Erro ao normalizar string: {e}")
         return None
+
+def human_scroll(driver, element):
+    try:
+        logger.info("Iniciando scroll")
+        target_y = element.location['y']
+        current_y = driver.execute_script('return window.pageYOffset;')
+
+        while (current_y + 800) < target_y:
+            scroll_increment = random.randint(400, 700)
+            driver.execute_script(f"window.scrollBy(0, {scroll_increment});")
+            time.sleep(random.uniform(0.3,0.8))
+            current_y += scroll_increment
+    
+        driver.execute_script("arguments[0].scrollIntoView({behavior: 'smooth', block: 'center'});", element)
+        time.sleep(random.uniform(0.5,1.0))
+
+        actions = ActionChains(driver)
+        actions.move_to_element(element).perform()
+        time.sleep(random.uniform(0.2,0.6))
+
+        logger.info("Scroll concluido")
+        return True
+    except Exception as e:
+        logger.error(f"Erro ao executar o Scroll: {e}")
+        return False
 
 def connect_db(gpu_data):
     try:

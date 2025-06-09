@@ -27,7 +27,7 @@ file_handler = logging.handlers.TimedRotatingFileHandler(
     filename=f"logs/scraping_{num}.log",
     when='D',
     interval=1,
-    backupCount=5,
+    backupCount=7,
     encoding='utf-8'
 )
 file_handler.setFormatter(log_formatter)
@@ -58,7 +58,7 @@ def scrape_task():
         time.sleep(1)
   
         gpu_data.extend(scrape_terabyte(driver, current_date, counters=site_counters))        
-        #gpu_data.extend(scrape_pichau(driver, current_date, counters=site_counters))
+        gpu_data.extend(scrape_pichau(driver, current_date, counters=site_counters))
         #gpu_data.extend(scrape_kabum(driver, current_date, counters=site_counters))
 
         driver.quit()

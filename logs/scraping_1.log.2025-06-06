@@ -1,0 +1,257 @@
+INFO - 
+
+Iniciando o script main.py em 2025-06-05 15:37:23.186814
+
+INFO - 
+
+Iniciando a função scrape_task em 2025-06-05 15:37:23.187193
+
+INFO - Criando driver do Selenium...
+INFO - Iniciando o scrapping na pichau
+INFO - Site totalmente carregado, prosseguindo com a raspagem
+INFO - ==== Número total de páginas: 51 ====
+INFO - == Acessando página 1 ==
+INFO - == Acessando página 2 ==
+INFO - Erro ao coletar o nome
+INFO - Erro ao coletar o nome
+INFO - Erro ao coletar o nome
+INFO - Erro ao coletar o nome
+INFO - Erro ao coletar o nome
+INFO - Erro ao coletar o nome
+INFO - Erro ao coletar o nome
+INFO - Erro ao coletar o nome
+ERROR - Erro ao passar para a próxima página: HTTPConnectionPool(host='localhost', port=37911): Max retries exceeded with url: /session/486a241ccbc319640836fb4dde2e556d/element (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x7275c214df10>: Failed to establish a new connection: [Errno 111] Connection refused'))
+INFO - 
+
+Foram coletadas 0 placas no site pichau
+INFO - Mas somente 0 foram salvas
+INFO - Scraping na Pichau concluido
+
+
+INFO - Site terabyte: 0 coletadas, 0 salvas
+INFO - Site pichau: 0 coletadas, 0 salvas
+INFO - Site kabum: 0 coletadas, 0 salvas
+INFO - Salvo em gpu_data
+INFO - gpu_data limpa
+INFO - 
+
+Iniciando o script main.py em 2025-06-05 15:39:07.233195
+
+INFO - 
+
+Iniciando a função scrape_task em 2025-06-05 15:39:07.233460
+
+INFO - Criando driver do Selenium...
+INFO - Iniciando o scrapping na pichau
+INFO - Site totalmente carregado, prosseguindo com a raspagem
+INFO - ==== Número total de páginas: 51 ====
+INFO - == Acessando página 1 ==
+INFO - == Acessando página 2 ==
+INFO - 
+
+Iniciando o script main.py em 2025-06-05 15:40:55.238444
+
+INFO - 
+
+Iniciando a função scrape_task em 2025-06-05 15:40:55.238742
+
+INFO - Criando driver do Selenium...
+INFO - Iniciando o scrapping na pichau
+INFO - Site totalmente carregado, prosseguindo com a raspagem
+INFO - ==== Número total de páginas: 51 ====
+INFO - == Acessando página 1 ==
+INFO - == Acessando página 2 ==
+ERROR - Erro ao passar para a próxima página: Message: 
+Stacktrace:
+#0 0x5efce554671a <unknown>
+#1 0x5efce4fe90a0 <unknown>
+#2 0x5efce503a9b0 <unknown>
+#3 0x5efce503aba1 <unknown>
+#4 0x5efce5088ea4 <unknown>
+#5 0x5efce50603cd <unknown>
+#6 0x5efce50862a0 <unknown>
+#7 0x5efce5060173 <unknown>
+#8 0x5efce502cd4b <unknown>
+#9 0x5efce502d9b1 <unknown>
+#10 0x5efce550b8cb <unknown>
+#11 0x5efce550f7ca <unknown>
+#12 0x5efce54f3622 <unknown>
+#13 0x5efce5510354 <unknown>
+#14 0x5efce54d845f <unknown>
+#15 0x5efce55344f8 <unknown>
+#16 0x5efce55346d6 <unknown>
+#17 0x5efce5545586 <unknown>
+#18 0x7538e0a9caa4 <unknown>
+#19 0x7538e0b29c3c <unknown>
+
+INFO - 
+
+Foram coletadas 0 placas no site pichau
+INFO - Mas somente 0 foram salvas
+INFO - Scraping na Pichau concluido
+
+
+INFO - Site terabyte: 0 coletadas, 0 salvas
+INFO - Site pichau: 0 coletadas, 0 salvas
+INFO - Site kabum: 0 coletadas, 0 salvas
+INFO - Salvo em gpu_data
+INFO - gpu_data limpa
+INFO - 
+
+Iniciando a função scrape_task em 2025-06-05 15:41:33.560953
+
+INFO - Criando driver do Selenium...
+INFO - 
+
+Iniciando o script main.py em 2025-06-05 15:47:12.086478
+
+INFO - 
+
+Iniciando a função scrape_task em 2025-06-05 15:47:12.086669
+
+INFO - Criando driver do Selenium...
+INFO - Iniciando o scrapping na pichau
+INFO - Site totalmente carregado, prosseguindo com a raspagem
+INFO - ==== Número total de páginas: 51 ====
+INFO - == Acessando página 1 ==
+INFO - Produto esgotado
+INFO - == Acessando página 2 ==
+INFO - 
+
+Iniciando o script main.py em 2025-06-05 15:57:12.497219
+
+INFO - 
+
+Iniciando a função scrape_task em 2025-06-05 15:57:12.497630
+
+INFO - Criando driver do Selenium...
+INFO - Iniciando o scrapping na pichau
+INFO - Site totalmente carregado, prosseguindo com a raspagem
+INFO - ==== Número total de páginas: 51 ====
+INFO - == Acessando página 1 ==
+INFO - Produto esgotado
+INFO - == Acessando página 2 ==
+ERROR - Erro ao passar para a próxima página: Message: invalid session id: session deleted as the browser has closed the connection
+from disconnected: not connected to DevTools
+  (Session info: chrome=136.0.7103.113)
+Stacktrace:
+#0 0x57dee594b71a <unknown>
+#1 0x57dee53ee0a0 <unknown>
+#2 0x57dee53d48ae <unknown>
+#3 0x57dee53fcbe9 <unknown>
+#4 0x57dee546dcef <unknown>
+#5 0x57dee548ac3c <unknown>
+#6 0x57dee5465173 <unknown>
+#7 0x57dee5431d4b <unknown>
+#8 0x57dee54329b1 <unknown>
+#9 0x57dee59108cb <unknown>
+#10 0x57dee59147ca <unknown>
+#11 0x57dee58f8622 <unknown>
+#12 0x57dee5915354 <unknown>
+#13 0x57dee58dd45f <unknown>
+#14 0x57dee59394f8 <unknown>
+#15 0x57dee59396d6 <unknown>
+#16 0x57dee594a586 <unknown>
+#17 0x799009a9caa4 <unknown>
+#18 0x799009b29c3c <unknown>
+
+INFO - 
+
+Foram coletadas 0 placas no site pichau
+INFO - Mas somente 0 foram salvas
+INFO - Scraping na Pichau concluido
+
+
+INFO - Site terabyte: 0 coletadas, 0 salvas
+INFO - Site pichau: 0 coletadas, 0 salvas
+INFO - Site kabum: 0 coletadas, 0 salvas
+INFO - Salvo em gpu_data
+INFO - gpu_data limpa
+INFO - 
+
+Iniciando a função scrape_task em 2025-06-05 15:57:48.177392
+
+INFO - Criando driver do Selenium...
+INFO - 
+
+Iniciando o script main.py em 2025-06-05 17:40:48.155742
+
+INFO - 
+
+Iniciando a função scrape_task em 2025-06-05 17:40:48.157649
+
+INFO - Criando driver do Selenium...
+INFO - Iniciando o scrapping na pichau
+INFO - Site totalmente carregado, prosseguindo com a raspagem
+INFO - ==== Número total de páginas: 51 ====
+INFO - == Acessando página 1 ==
+INFO - Produto esgotado
+INFO - 
+
+Iniciando o script main.py em 2025-06-05 17:51:53.116549
+
+INFO - 
+
+Iniciando a função scrape_task em 2025-06-05 17:51:53.116762
+
+INFO - Criando driver do Selenium...
+INFO - Iniciando o scrapping na pichau
+INFO - Site totalmente carregado, prosseguindo com a raspagem
+INFO - ==== Número total de páginas: 51 ====
+INFO - == Acessando página 1 ==
+INFO - Produto esgotado
+INFO - == Acessando página 2 ==
+INFO - 
+
+Iniciando o script main.py em 2025-06-06 17:41:21.862755
+
+INFO - 
+
+Iniciando a função scrape_task em 2025-06-06 17:41:21.863064
+
+INFO - Criando driver do Selenium...
+INFO - Iniciando o scrapping na pichau
+INFO - Site totalmente carregado, prosseguindo com a raspagem
+INFO - ==== Número total de páginas: 51 ====
+INFO - == Acessando página 1 ==
+INFO - == Acessando página 2 ==
+ERROR - Erro ao passar para a próxima página: Message: 
+Stacktrace:
+#0 0x5de4a59a071a <unknown>
+#1 0x5de4a54430a0 <unknown>
+#2 0x5de4a54949b0 <unknown>
+#3 0x5de4a5494ba1 <unknown>
+#4 0x5de4a54e2ea4 <unknown>
+#5 0x5de4a54ba3cd <unknown>
+#6 0x5de4a54e02a0 <unknown>
+#7 0x5de4a54ba173 <unknown>
+#8 0x5de4a5486d4b <unknown>
+#9 0x5de4a54879b1 <unknown>
+#10 0x5de4a59658cb <unknown>
+#11 0x5de4a59697ca <unknown>
+#12 0x5de4a594d622 <unknown>
+#13 0x5de4a596a354 <unknown>
+#14 0x5de4a593245f <unknown>
+#15 0x5de4a598e4f8 <unknown>
+#16 0x5de4a598e6d6 <unknown>
+#17 0x5de4a599f586 <unknown>
+#18 0x7428cb89caa4 <unknown>
+#19 0x7428cb929c3c <unknown>
+
+INFO - 
+
+Foram coletadas 0 placas no site pichau
+INFO - Mas somente 0 foram salvas
+INFO - Scraping na Pichau concluido
+
+
+INFO - Site terabyte: 0 coletadas, 0 salvas
+INFO - Site pichau: 0 coletadas, 0 salvas
+INFO - Site kabum: 0 coletadas, 0 salvas
+INFO - Salvo em gpu_data
+INFO - gpu_data limpa
+INFO - 
+
+Iniciando a função scrape_task em 2025-06-06 17:42:16.886698
+
+INFO - Criando driver do Selenium...
