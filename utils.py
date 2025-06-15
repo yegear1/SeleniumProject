@@ -157,7 +157,6 @@ def create_driver():
     options.add_argument("--disable-dev-shm-usage")
     options.add_argument("--disable-notifications")
     options.add_argument("window-size=1920,1080")
-    options.add_argument("--start-maximized")
     options.add_argument("--no-sandbox")
 
     try:
@@ -238,6 +237,7 @@ def normalize_price(price_element):
                     price = match.group(1)
 
                     price = price.replace(".", "").replace(",", ".")
+                    logger.info(f"{price}")
                     return float(price)
             else:
                 raise ValueError(f"Preço não encontrado no texto: {price_text}")

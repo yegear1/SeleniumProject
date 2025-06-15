@@ -6,6 +6,7 @@ from utils import create_driver, save_csv, connect_db
 
 import logging
 import logging.handlers
+import random
 import time
 import os
 
@@ -53,13 +54,13 @@ def scrape_task():
     gpu_data = []
     try:
         driver = create_driver()
-        time.sleep(2)
+        time.sleep(random.uniform(2.5, 3.5))
         driver.get("https://www.google.com/")
-        time.sleep(1)
+        time.sleep(random.uniform(0.5, 2.5))
   
-        gpu_data.extend(scrape_terabyte(driver, current_date, counters=site_counters))        
-        gpu_data.extend(scrape_pichau(driver, current_date, counters=site_counters))
-        #gpu_data.extend(scrape_kabum(driver, current_date, counters=site_counters))
+        #gpu_data.extend(scrape_terabyte(driver, current_date, counters=site_counters))        
+        #gpu_data.extend(scrape_pichau(driver, current_date, counters=site_counters))
+        gpu_data.extend(scrape_kabum(driver, current_date, counters=site_counters))
 
         driver.quit()
 
